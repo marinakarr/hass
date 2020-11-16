@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   let params = location.search;
-  //console.log(decodeURI(params).replace("?", ""))
-  //let newParams = decodeURI(params).replace("?", "")
-  let newParams = params.toString().replace("?", "")//.replace(/\%20/g, " ");
-  console.log(newParams)
+  let newParams = params.toString().replace("?", "")
   renderTechDetail(newParams);
 });
 
@@ -13,7 +10,6 @@ function el(id) {
 
 function renderTechDetail(tool) {
   let url = "https://api.airtable.com/v0/appT5nNiLF8Dr1wwj/Technology%20List/"+tool
-  console.log(url)
   fetch((url), {
     headers: {
       Authorization: "Bearer keyemv7utChwq4g5e",
@@ -22,9 +18,8 @@ function renderTechDetail(tool) {
     .then((res) => res.json())
     .then((json) => {
       console.log(json)
-      //for (let i in json.records) {
-        //if (json.records[i]["fields"]["Name"] === tool) {
           let website = json["fields"]["Website"];
+          let name = json['fields']['Name'];
           let tags = json["fields"]["Tags"];
           let description = json["fields"]["Description"];
           let awio = json["fields"]["Animal Welfare Industry Only"];
@@ -36,7 +31,7 @@ function renderTechDetail(tool) {
           let caseStudies = json["fields"]["Case Studies"];
 
           let toolLi = document.createElement("li");
-          toolLi.innerText = tool;
+          toolLi.innerText = name;
           el("tool").appendChild(toolLi);
 
           let websiteLi = document.createElement("a");
