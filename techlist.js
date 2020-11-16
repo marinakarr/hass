@@ -3,17 +3,14 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   fetchTechList();
-  console.log("Hi everybody!");
 });
 
+//retrieve doc element
 function el(id) {
   return document.getElementById(id);
 }
 
-function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
-}
-
+//renders a single tag list object and appends list to html list element, tagId
 function renderEachTag(tag) {
   const tagUl = document.createElement("ul");
   tagUl.setAttribute("class", "list-group");
@@ -36,24 +33,25 @@ function fetchTechList() {
       }
 
       let allTagsArray = tagsArray.toString().split(",");
+      let uniqueTagsArray = new Set(allTagsArray)
 
-      let uniqueTagsArray = allTagsArray.filter(onlyUnique).sort();
-
+      //render each tag and get relevant tech sites
       for (let j of uniqueTagsArray) {
         renderEachTag(j);
         addTechNamesToTags(j);
       }
 
+      //
       function addTechNamesToTags(tag) {
         for (let i in json.records) {
           if (json.records[i]["fields"]["Tags"].includes(tag)) {
             let toolName = json.records[i]["fields"]["Name"];
-            //console.log(toolName.replace("%27", "'"))
+            let toolId = json.records[i]['id'];
             const toolNameLi = document.createElement("a");
             toolNameLi.setAttribute("class", "list-group-item");
-            toolNameLi.setAttribute("id", toolName);
+            toolNameLi.setAttribute("id", toolId);
             toolNameLi.innerText = toolName;
-            toolNameLi.href = `./techdetail.html?${toolName}`;
+            toolNameLi.href = `./techdetail.html?${toolId}`;
             toolNameLi.target = "_blank";
             document.getElementById(tag).append(toolNameLi);
           }
