@@ -2,10 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let params = location.search;
   //console.log(decodeURI(params).replace("?", ""))
   //let newParams = decodeURI(params).replace("?", "")
-  let newParams = params.toString().replace("?", "").replace("%27", "'").replace(/\%20/g, " ");
+  let newParams = params.toString().replace("?", "")//.replace(/\%20/g, " ");
   console.log(newParams)
   renderTechDetail(newParams);
-  console.log("Hi everybody!");
 });
 
 function el(id) {
@@ -13,27 +12,28 @@ function el(id) {
 }
 
 function renderTechDetail(tool) {
-  fetch("https://api.airtable.com/v0/appT5nNiLF8Dr1wwj/Technology%20List/", {
+  let url = "https://api.airtable.com/v0/appT5nNiLF8Dr1wwj/Technology%20List/"+tool
+  console.log(url)
+  fetch((url), {
     headers: {
       Authorization: "Bearer keyemv7utChwq4g5e",
     },
   })
     .then((res) => res.json())
     .then((json) => {
-      for (let i in json.records) {
-        console.log(json.records[i]["fields"]["Name"]);
-        //console.log(tool)
-        if (json.records[i]["fields"]["Name"] === tool) {
-          let website = json.records[i]["fields"]["Website"];
-          let tags = json.records[i]["fields"]["Tags"];
-          let description = json.records[i]["fields"]["Description"];
-          let awio = json.records[i]["fields"]["Animal Welfare Industry Only"];
-          let contact = json.records[i]["fields"]["Contact"];
-          let contactEmail = json.records[i]["fields"]["Contact Email"];
-          let pricingModel = json.records[i]["fields"]["Pricing Model"];
-          let pricingDetails = json.records[i]["fields"]["Pricing Details"];
-          let attachments = json.records[i]["fields"]["Attachments"];
-          let caseStudies = json.records[i]["fields"]["Case Studies"];
+      console.log(json)
+      //for (let i in json.records) {
+        //if (json.records[i]["fields"]["Name"] === tool) {
+          let website = json["fields"]["Website"];
+          let tags = json["fields"]["Tags"];
+          let description = json["fields"]["Description"];
+          let awio = json["fields"]["Animal Welfare Industry Only"];
+          let contact = json["fields"]["Contact"];
+          let contactEmail = json["fields"]["Contact Email"];
+          let pricingModel = json["fields"]["Pricing Model"];
+          let pricingDetails = json["fields"]["Pricing Details"];
+          let attachments = json["fields"]["Attachments"];
+          let caseStudies = json["fields"]["Case Studies"];
 
           let toolLi = document.createElement("li");
           toolLi.innerText = tool;
@@ -129,8 +129,8 @@ function renderTechDetail(tool) {
             }
           }
         }
-      }
-    });
+      
+    );
 }
 
 function renderCaseStudies(study) {
