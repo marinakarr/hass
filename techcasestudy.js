@@ -87,23 +87,27 @@ function renderCaseStudyPage(study) {
       descSpan.innerText = desc;
       el("desc").appendChild(descSpan);
 
-      let orgSpan = document.createElement("span");
-      orgSpan.setAttribute("class", "notbold");
-      if (org === undefined) {
-        orgSpan.innerText = "None";
-      } else {
+      
+      
+      if(  org !== undefined){
+        let orgSpan = document.createElement("span");
+        orgSpan.setAttribute("class", "notbold");
         orgSpan.innerText = org;
+        document.getElementById("organization").append("Organization: ")
+        el("organization").appendChild(orgSpan);
+        
       }
-      el("organization").appendChild(orgSpan);
+      
 
-      let orgTypeSpan = document.createElement("span");
-      orgTypeSpan.setAttribute("class", "notbold");
-      if (orgType === undefined) {
-        orgTypeSpan.innerText = "None";
-      } else {
+      // follow this setup for rest of the attributes
+      if (orgType !== undefined) {
+        let orgTypeSpan = document.createElement("span");
+        orgTypeSpan.setAttribute("class", "notbold");
         orgTypeSpan.innerText = orgType;
+        document.getElementById("organizationType").append("Organization Type: ")
+        el("organizationType").appendChild(orgTypeSpan);
       }
-      el("organizationType").appendChild(orgTypeSpan);
+      
 
       let contactNameSpan = document.createElement("span");
       contactNameSpan.setAttribute("class", "notbold");

@@ -34,6 +34,10 @@ function renderTechDetail(tool) {
           toolLi.innerText = name;
           el("tool").appendChild(toolLi);
 
+          let toolLi1 = document.createElement("li");
+          toolLi1.innerText = name;
+          el("toolPage").append(toolLi1);
+
           let websiteLi = document.createElement("a");
           websiteLi.setAttribute("class", "notbold");
           websiteLi.innerText = website;
