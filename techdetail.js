@@ -60,9 +60,9 @@ function renderTechDetail(tool) {
           let awioSpan = document.createElement("span");
           awioSpan.setAttribute("class", "notbold");
           if (awio === undefined) {
-            awioSpan.innerText = "false";
+            awioSpan.innerText = "No";
           } else {
-            awioSpan.innerText = awio;
+            awioSpan.innerText = "Yes";
           }
           el("awio").appendChild(awioSpan);
 
@@ -82,21 +82,26 @@ function renderTechDetail(tool) {
           }
           el("email").appendChild(contactEmailA);
 
+          'look here to change the no one to invisible section'
+          'change made, moved el("model") line to else stmt'
           let pricingModelSpan = document.createElement("span");
           pricingModelSpan.setAttribute("class", "notbold");
           if (pricingModel === undefined) {
             pricingModelSpan.innerText = "None";
           } else {
             pricingModelSpan.innerText = pricingModel;
+            
           }
           el("model").appendChild(pricingModelSpan);
 
+          
           let pricingDetailsSpan = document.createElement("span");
           pricingDetailsSpan.setAttribute("class", "notbold");
           if (pricingDetails === undefined) {
             pricingDetailsSpan.innerText = "None";
           } else {
             pricingDetailsSpan.innerText = pricingDetails;
+            
           }
           el("details").appendChild(pricingDetailsSpan);
 
