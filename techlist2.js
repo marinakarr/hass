@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
               toolNameLi.setAttribute("id", toolId);
               toolNameLi.innerText = toolName;
               toolNameLi.href = `./techdetail.html?${toolId}`;
-              toolNameLi.target = "_blank";
+              toolNameLi.target = "_self";
               document.getElementById(tag).append(toolNameLi);
             }
           }
