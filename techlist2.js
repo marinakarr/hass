@@ -12,11 +12,25 @@ document.addEventListener("DOMContentLoaded", () => {
   
   //renders a single tag list object and appends list to html list element, tagId
   function renderEachTag(tag) {
-    const tagUl = document.createElement("ul");
+    const cutTag = tag.replace(/\s/g, '');
+
+    // const tagUl = document.createElement("list-group");
+  
+    // tagUl.setAttribute("id", cutTag);
+    // tagUl.innerText = tag;
+    //tagUl.setAttribute('data-toggle', 'collapse')
+    //tagUl.setAttribute('data-parent', '#'+cutTag+'Block')
+
+    const tagUl = document.createElement("list-group");
     tagUl.setAttribute("class", "list-group");
     tagUl.setAttribute('style', 'lists')
-    tagUl.setAttribute("id", tag);
+    tagUl.setAttribute("id", cutTag);
+    tagUl.setAttribute('href', '#'+cutTag)
     tagUl.innerText = tag;
+    document.getElementById("tagId").appendChild(tagUl);
+
+
+    //block.appendChild(tagUl)
     document.getElementById("tagId").appendChild(tagUl);
 
     const tagLink = document.createElement("a");
@@ -41,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         let allTagsArray = tagsArray.toString().split(",");
-        let uniqueTagsArray = new Set(allTagsArray)
+        let uniqueTagsArray = new Set(allTagsArray.sort())
+  
   
         //render each tag and get relevant tech sites
         for (let j of uniqueTagsArray) {
@@ -49,8 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
           addTechNamesToTags(j);
         }
   
-        //
         function addTechNamesToTags(tag) {
+
           for (let i in json.records) {
             if (json.records[i]["fields"]["Tags"].includes(tag)) {
               let toolName = json.records[i]["fields"]["Name"];
@@ -61,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
               toolNameLi.innerText = toolName;
               toolNameLi.href = `./techdetail.html?${toolId}`;
               toolNameLi.target = "_self";
-              document.getElementById(tag).append(toolNameLi);
+              const cutTag = tag.replace(/\s/g, '');
+              document.getElementById(cutTag).appendChild(toolNameLi);
             }
           }
         }
