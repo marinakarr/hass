@@ -12,19 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
   
   //renders a single tag list object and appends list to html list element, tagId
   function renderEachTag(tag) {
-    //const cutTag = tag.replace(/\s/g, '');
-
-    const tagUl = document.createElement("list-group");
+    const tagUl = document.createElement("ul");
     tagUl.setAttribute("class", "list-group");
     tagUl.setAttribute('style', 'lists')
-    tagUl.setAttribute('data-toggle', 'collapse')
     tagUl.setAttribute("id", tag);
-    tagUl.setAttribute('href', '#'+tag)
     tagUl.innerText = tag;
-    document.getElementById("tagId").appendChild(tagUl);
-
-
-    //block.appendChild(tagUl)
     document.getElementById("tagId").appendChild(tagUl);
 
     const tagLink = document.createElement("a");
@@ -59,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         function addTechNamesToTags(tag) {
-
           for (let i in json.records) {
             if (json.records[i]["fields"]["Tags"].includes(tag)) {
               let toolName = json.records[i]["fields"]["Name"];
@@ -69,8 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
               toolNameLi.setAttribute("id", toolId);
               toolNameLi.innerText = toolName;
               toolNameLi.href = `./techdetail.html?${toolId}`;
-              toolNameLi.target = "_self";
-              document.getElementById(tag).appendChild(toolNameLi);
+              toolNameLi.target = "_blank";
+              document.getElementById(tag).append(toolNameLi);
             }
           }
         }
