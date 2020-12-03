@@ -12,20 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
   
   //renders a single tag list object and appends list to html list element, tagId
   function renderEachTag(tag) {
-    const cutTag = tag.replace(/\s/g, '');
-
-    // const tagUl = document.createElement("list-group");
-  
-    // tagUl.setAttribute("id", cutTag);
-    // tagUl.innerText = tag;
-    //tagUl.setAttribute('data-toggle', 'collapse')
-    //tagUl.setAttribute('data-parent', '#'+cutTag+'Block')
+    //const cutTag = tag.replace(/\s/g, '');
 
     const tagUl = document.createElement("list-group");
     tagUl.setAttribute("class", "list-group");
     tagUl.setAttribute('style', 'lists')
-    tagUl.setAttribute("id", cutTag);
-    tagUl.setAttribute('href', '#'+cutTag)
+    tagUl.setAttribute('data-toggle', 'collapse')
+    tagUl.setAttribute("id", tag);
+    tagUl.setAttribute('href', '#'+tag)
     tagUl.innerText = tag;
     document.getElementById("tagId").appendChild(tagUl);
 
@@ -76,8 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
               toolNameLi.innerText = toolName;
               toolNameLi.href = `./techdetail.html?${toolId}`;
               toolNameLi.target = "_self";
-              const cutTag = tag.replace(/\s/g, '');
-              document.getElementById(cutTag).appendChild(toolNameLi);
+              document.getElementById(tag).appendChild(toolNameLi);
             }
           }
         }
