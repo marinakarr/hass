@@ -1,8 +1,6 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('whats happening')
-
     fetchTechList();
   });
   
@@ -12,24 +10,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   //renders a single tag list object and appends list to html list element, tagId
-  function renderEachTag(tag) {
+  function renderEachTag(tag, id) {
+    //TODO : modify tag IDs to not use special characters, 'telehelp/televet' wont collapse because of space
+
+    const item = document.createElement('div');
+    item.setAttribute('class', 'tagList');
+    item.setAttribute("id", id);
+
+    const button = document.createElement('button');
+    button.innerText = tag;
+    button.setAttribute('data-toggle', 'collapse');
+    button.setAttribute('class', 'button')
+    button.setAttribute('data-target', '#'+id+'Collapse')
+
+    item.append(button)
+
+    const collapseContainer = document.createElement('div')
+    collapseContainer.setAttribute('class', 'collapse show')
+    collapseContainer.setAttribute('id', id+'Collapse')
+
     const tagUl = document.createElement("ul");
     tagUl.setAttribute("class", "list-group");
-    tagUl.setAttribute('style', 'lists')
-    tagUl.setAttribute("id", tag);
-    tagUl.innerText = tag;
-    document.getElementById("tagId").appendChild(tagUl);
+    tagUl.setAttribute('id', id+'Child')
+    //tagUl.setAttribute('style', 'lists')
+
+    collapseContainer.appendChild(tagUl)
+    item.append(collapseContainer) 
+    $("#tagId").append(item);
+
 
     const tagLink = document.createElement("a");
     tagLink.setAttribute("class", "nav-item p-3");
     tagLink.innerText = tag;
-    tagLink.href = '#'+tag;
-    document.getElementById('tagNav').append(tagLink);
+    tagLink.href = '#'+id;
+    $('#tagNav').append(tagLink);
   }
 
   
   function fetchTechList() {
     let tagsArray = [];
+  
     fetch("https://api.airtable.com/v0/appT5nNiLF8Dr1wwj/Technology%20List/", {
       headers: {
         Authorization: "Bearer keyemv7utChwq4g5e",
@@ -47,11 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
   
         //render each tag and get relevant tech sites
         for (let j of uniqueTagsArray) {
-          renderEachTag(j);
-          addTechNamesToTags(j);
+          tagId=j.replace(" ", "")
+          tagId=encodeURIComponent(tagId)
+
+          renderEachTag(j, tagId);
+          addTechNamesToTags(j, tagId);
         }
   
-        function addTechNamesToTags(tag) {
+        function addTechNamesToTags(tag, id) {
           for (let i in json.records) {
             if (json.records[i]["fields"]["Tags"].includes(tag)) {
               let toolName = json.records[i]["fields"]["Name"];
@@ -62,11 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
               toolNameLi.innerText = toolName;
               toolNameLi.href = `./techdetail.html?${toolId}`;
               toolNameLi.target = "_blank";
-              document.getElementById(tag).append(toolNameLi);
+              document.getElementById(id+'Child').append(toolNameLi);
             }
           }
         }
       });
   }
-  
+
+
   
