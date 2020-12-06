@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //render each tag and get relevant tech sites
         for (let j of uniqueTagsArray) {
           tagId=j.replace(" ", "")
-          tagId=encodeURIComponent(tagId)
+          tagId=j.replace('/', '')
 
           renderEachTag(j, tagId);
           addTechNamesToTags(j, tagId);
