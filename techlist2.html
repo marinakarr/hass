@@ -2,9 +2,6 @@
 <head>
     <meta charset="UTF-8">
 
-   <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
-       
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -27,8 +24,22 @@
             color: black;
         }
 
-        .button {
+        .container{
+            padding-bottom: 20px;
+        }
+
+        .altbutton {
             width: 100%;
+        }
+
+        .button {
+            width:auto;
+            background-color:lightpink;
+            
+        }
+
+        .form-row {
+            padding-bottom: 20px;
         }
 
     </style>
@@ -43,17 +54,44 @@
 
     <nav class="container navbar navbar-light justify-content-center" id ='tagNav'> 
     </nav>
-      
 
-    </div>
+    <form class='form-group'>
+
+        <div class="container">
+            <h2>Filters: </h2>
+                <div class="form-row">
+                    <div class='col'>
+                        <label for='priceList'>Price Model</label>
+                        <select class="form-control" id='priceList'>
+                        </select>
+                    </div>
+
+                    <div class='col'>
+                        <label for='complexity'>Complexity to Maintain</label>
+                        <select class="form-control" id='complexity'>
+                        </select>
+                    </div>
+
+                </div>    
+                <div class='form-row'>
+                    <div class='col'>
+                        <button type='button' onclick="filtering()" class=button>Submit</button>
+                    </div>
+                    <!-- <div class='col'>
+                        <button type='reset' class=button>Submit</button>
+                    </div> -->
+                </div>
+            
+            </div>                
+        
+    </form>
+    
 
     
     <div id='main' class="container">
         <div class='list-group' id='tagId'>
-
         </div>
     </div>
-    <!-- <script src="techlist2.js"></script> -->
 </body>
 
 </html>
