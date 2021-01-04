@@ -25,6 +25,7 @@ function renderEachTag(tag) {
   
   const item = document.createElement('div');
   item.setAttribute("id", tagId);
+  item.style.display='none';
   
   const button = document.createElement('button');
   button.innerText = tag.tagName;
@@ -173,6 +174,7 @@ function addTechNamesToTags(tag, list) {
   list.forEach(function(i){
     if(i.hasTag(name)){
       let l = document.getElementById(tagId)
+      l.style.display='block'
       const toolNameLi = document.createElement("a");
       toolNameLi.setAttribute("class", "list-group-item");
       toolNameLi.setAttribute("id", i.id);
