@@ -62,27 +62,33 @@
                 <div class="form-row">
                     <div class='col'>
                         <label for='priceList'>Price Model</label>
-                        <select class="form-control" id='priceList'>
+                        <select class="form-control" id='priceList' onchange="filtering()">
                         </select>
                     </div>
 
                     <div class='col'>
-                        <label for='complexity'>Complexity to Maintain</label>
-                        <select class="form-control" id='complexity'>
+                        <label for='maintain'>Complexity to Maintain</label>
+                        <select class="form-control" id='maintain' onchange="filtering()">
+                        </select>
+                    </div>
+
+                    <div class='col'>
+                        <label for='implement'>Complexity to Implement</label>
+                        <select class="form-control" id='implement' onchange="filtering()">
                         </select>
                     </div>
 
                 </div>    
-                <div class='form-row'>
+                <!-- <div class='form-row'>
                     <div class='col'>
-                        <button type='button' onclick="filtering" class=button>Submit</button>
+                        <button type='button' onclick="filtering()" class=button>Submit</button>
                     </div>
-                    <!-- <div class='col'>
+                     <div class='col'>
                         <button type='reset' class=button>Submit</button>
-                    </div> -->
-                </div>
+                    </div>
+                </div> -->
             
-            </div>                
+        </div>                
         
     </form>
     

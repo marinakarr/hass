@@ -57,12 +57,14 @@ function renderEachTag(tag) {
 
 //storing each tech to avoid calling API multiple times for filtering
 class tech {
-  constructor(id, name, tags, priceModel, complex){
+  constructor(id, name, tags, priceModel, maint, imp){
     this.id = id;
     this.name = name; 
     this.tags = tags; //id names of tags
     this.priceModel = this.setFilter(priceModel);
-    this.complex= this.setFilter(complex)
+    this.maint= this.setFilter(maint)
+    this.imp=  this.setFilter(imp)
+
   }
 
   hasTag(tag){
@@ -118,11 +120,12 @@ function fetchTechList() {
     id = json.records[i]['id']
     name = json.records[i]["fields"]["Name"];
     priceModel = json.records[i]["fields"]["Pricing Model"]
-    complex = json.records[i]["fields"]["Complexity to Maintain"]
+    maint = json.records[i]["fields"]["Complexity to Maintain"]
     published = json.records[i]["fields"]["Published"]
+    implementDif = json.records[i]["fields"]["Complexity to Implement"]
 
     if(published){
-      allTechList.push(new tech(id, name, tags, priceModel, complex))
+      allTechList.push(new tech(id, name, tags, priceModel, maint, implementDif))
     }
   }
 
@@ -146,7 +149,7 @@ function fetchTechList() {
       tagList[xt].addTool(x)
     })
   })
-
+  renderFilters();
   renderItems(currFilter);
   })
 
@@ -155,7 +158,6 @@ function fetchTechList() {
 //render each tag and get tech sites that match the filter
 //uses the overall tagslist and either techList or filtered version
 function renderItems(tools){
-  renderFilters();
   for (const obj in tagList){
     j = tagList[obj];
     renderEachTag(j);
@@ -184,7 +186,6 @@ function addTechNamesToTags(tag, list) {
 
 
 function getPriceFilterOptions(list){
-  console.log('grrrr')
   let models = []
   models.push('All')
   list.forEach(function(i) {
@@ -198,7 +199,17 @@ function getMaintainFilterOptions(list){
   let models = []
   models.push('All')
   list.forEach(function(i) {
-    models = models.concat(i.complex)
+    models = models.concat(i.maint)
+  })
+  uniqueModels = new Set(models)
+  return Array.from(uniqueModels)
+}
+
+function getImplementFilterOptions(list) {
+  let models = []
+  models.push('All')
+  list.forEach(function(i) {
+    models = models.concat(i.imp)
   })
   uniqueModels = new Set(models)
   return Array.from(uniqueModels)
@@ -214,7 +225,7 @@ function renderFilters(){
     }
   });
 
-  let maintFilter = $('#complexity')
+  let maintFilter = $('#maintain')
   let complexities = getMaintainFilterOptions(allTechList)
   complexities.forEach(function(i) {
     if (i){
@@ -222,20 +233,34 @@ function renderFilters(){
       maintFilter.append(option)
     }
   });
+
+  let impFilter = $('#implement')
+  let imps = getImplementFilterOptions(allTechList)
+  imps.forEach(function(i) {
+    if (i){
+      let option = "<option>"+ i + "</option>"
+      impFilter.append(option)
+    }
+  });
 }
  
 
 function filtering(){
-  console.log('click')
   let price = document.getElementById("priceList");
-  let priceVal = price.options[price.selectedIndex].value;
+  let priceVal = price.options[price.selectedIndex].value;  
+  console.log(priceVal)
 
-  let complex = document.getElementById("complexity");
-  let compVal = complex.options[complex.selectedIndex].value;
+  let maint = document.getElementById("maintain");
+  let maintVal = maint.options[maint.selectedIndex].value;
+
+  let imp = document.getElementById("implement");
+  let impVal = imp.options[imp.selectedIndex].value; 
 
   let currFilter = []
+
   allTechList.forEach(function(tool) {
-    if ((tool.priceModel==priceVal || priceVal=='All')&&(tool.complex==compVal || compVal=='All')){
+    if ((tool.priceModel==priceVal || priceVal=='All')&&(tool.maint==maintVal || maintVal=='All') 
+    &&(tool.imp==impVal || impVal=='All')){
       currFilter.push(tool)
     }
   })
@@ -250,10 +275,12 @@ function refreshLists(){
   toolLists.innerHTML=''
   var nav = document.getElementById('tagNav')
   nav.innerHTML=''
-  var pm = document.getElementById('priceList')
-  pm.innerHTML=''
-  var comp = document.getElementById('complexity')
-  comp.innerHTML=''
+  // var pm = document.getElementById('priceList')
+  // pm.innerHTML=''
+  // var maint = document.getElementById('maintain')
+  // maint.innerHTML=''
+  // var imp = document.getElementById('implement')
+  // imp.innerHTML=''
 }
 
 
