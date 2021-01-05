@@ -23,13 +23,21 @@ function renderTechnology(tech) {
     .then((res) => res.json())
     .then((json) => {
       let caseStudyTech = json["fields"]["Name"];
+      let caseStudyId = json["id"];
+      let studyTech = history.back
+      console.log(studyTech);
       let technologyA = document.createElement("a");
+      document.getElementById(tech)
       technologyA.setAttribute("class", "notbold");
       technologyA.innerText = caseStudyTech;
       technologyA.title = "Click here";
-      technologyA.href = `./techdetail.html?${caseStudyTech}`;
-      technologyA.target = "_blank";
+      technologyA.href = `./techdetail.html?${caseStudyId}`;
+      technologyA.target = "_self";
       el("technology").appendChild(technologyA);
+      el("toolName").append(caseStudyTech);
+      el("toolName").setAttribute("href", technologyA.href);
+      
+
     });
 }
 
@@ -39,8 +47,8 @@ function renderTags(taglist) {
     tagsA.setAttribute("class", "notbold");
     tagsA.innerText = `${i}\u00A0\u00A0\u00A0`;
     tagsA.title = "Click here";
-    tagsA.href = `./techlist.html`;
-    tagsA.target = "_blank";
+    tagsA.href = `./techlist2.html`;
+    tagsA.target = "_self";
     el("tags").appendChild(tagsA);
   }
 }
@@ -58,7 +66,7 @@ function renderCaseStudyPage(study) {
     .then((json) => {
     
       let title = json["fields"]["Title"];
-      let desc = json["fields"]["Notes (rename to Short Description?)"];
+      let desc = json["fields"]["Notes"];
       let org = json["fields"]["Organization"];
       let orgType = json["fields"]["Organization Type"];
       let contactName = json["fields"]["Contact Name"];
@@ -76,6 +84,7 @@ function renderCaseStudyPage(study) {
       let ratingEaseOfUse = json["fields"]["Rating (1-5) - Ease of Use"];
       let ratingEaseOfDeployment = json["fields"]["Rating (1-5) - Ease of Deployment"];
       let ratingCostValue = json["fields"]["Rating (1-5) - Cost / Value"];
+      
 
       let titleSpan = document.createElement("span");
       titleSpan.setAttribute("class", "notbold");
@@ -87,167 +96,193 @@ function renderCaseStudyPage(study) {
       descSpan.innerText = desc;
       el("desc").appendChild(descSpan);
 
-      let orgSpan = document.createElement("span");
-      orgSpan.setAttribute("class", "notbold");
-      if (org === undefined) {
-        orgSpan.innerText = "None";
-      } else {
+      
+      
+      if(  org !== undefined){
+        let orgSpan = document.createElement("span");
+        orgSpan.setAttribute("class", "notbold");
         orgSpan.innerText = org;
+        document.getElementById("organization").append("Organization: ");
+        el("organization").appendChild(orgSpan);
+        
       }
-      el("organization").appendChild(orgSpan);
+      
 
-      let orgTypeSpan = document.createElement("span");
-      orgTypeSpan.setAttribute("class", "notbold");
-      if (orgType === undefined) {
-        orgTypeSpan.innerText = "None";
-      } else {
+      // follow this setup for rest of the attributes
+      if (orgType !== undefined) {
+        let orgTypeSpan = document.createElement("span");
+        orgTypeSpan.setAttribute("class", "notbold");
         orgTypeSpan.innerText = orgType;
+        document.getElementById("organizationType").append("Organization Type: ");
+        el("organizationType").appendChild(orgTypeSpan);
       }
-      el("organizationType").appendChild(orgTypeSpan);
+      
 
-      let contactNameSpan = document.createElement("span");
-      contactNameSpan.setAttribute("class", "notbold");
-      if (contactName === undefined) {
-        contactNameSpan.innerText = "None";
-      } else {
+      
+      if (contactName !== undefined) {
+        let contactNameSpan = document.createElement("span");
+        contactNameSpan.setAttribute("class", "notbold");
+        document.getElementById("contactName").append("Contact Name: ");
         contactNameSpan.innerText = contactName;
+        el("contactName").appendChild(contactNameSpan);
       }
-      el("contactName").appendChild(contactNameSpan);
+      
 
-      let contactEmailA = document.createElement("a");
-      contactEmailA.setAttribute("class", "notbold");
-      if (contactEmail === undefined) {
-        contactEmailA.innerText = "None";
-      } else {
+      
+      if (contactEmail !== undefined) {
+        let contactEmailA = document.createElement("a");
+        contactEmailA.setAttribute("class", "notbold");
+        document.getElementById("contactEmail").append("Contact Email: ");
         console.log();
         contactEmailA.innerText = contactEmail;
         contactEmailA.href = `mailto:${contactEmail}`;
         contactEmailA.title = "Click Here";
         contactEmailA.target = "_blank";
+        el("contactEmail").appendChild(contactEmailA);
       }
-      el("contactEmail").appendChild(contactEmailA);
+      
 
-      let dateSpan = document.createElement("span");
-      dateSpan.setAttribute("class", "notbold");
-      if (date === undefined) {
-        dateSpan.innerText = "None";
-      } else {
+      
+      if (date !== undefined) {
+        let dateSpan = document.createElement("span");
+        dateSpan.setAttribute("class", "notbold");
+        document.getElementById("date").append("Case Study Date: ");
         dateSpan.innerText = date;
+        el("date").appendChild(dateSpan);
       }
-      el("date").appendChild(dateSpan);
+      
 
-      let technologyA = document.createElement("a");
-      technologyA.setAttribute("class", "notbold");
-      if (technology === undefined) {
-        technologyA.innerText = "None";
-        el("technology").appendChild(technologyA);
-      } else {
-        //for (let i of technology) {
-        renderTechnology(technology);
-        //}
+      
+      if (technology !== undefined) {
+        let technologyA = renderTechnology(technology);
+        //console.log("Back to main code");
+        //technologyA.setAttribute("class", "notbold");
+        //console.log("Step 1");
+        document.getElementById("technology").append("Technology: ");
+        //console.log("Step 2");
+        //el("technology").appendChild(technologyA);
+        //console.log("Step 3");
       }
+      
 
-      let tagsA = document.createElement("a");
-      tagsA.setAttribute("class", "notbold");
-      if (tags === undefined) {
-        tagsA.innerText = "None";
-        el("tags").appendChild(tagsA);
-      } else {
+      
+      if (tags !== undefined) {
+        document.getElementById("tags").append("Tags (from Technology List): ");
+        let tagsA = document.createElement("a");
+        tagsA.setAttribute("class", "notbold");
         renderTags(tags);
       }
 
-      let dependenciesSpan = document.createElement("span");
-      dependenciesSpan.setAttribute("class", "notbold");
-      if (dependencies === undefined) {
-        dependenciesSpan.innerText = "None";
-      } else {
+      
+      if (dependencies !== undefined) {
+        let dependenciesSpan = document.createElement("span");
+        dependenciesSpan.setAttribute("class", "notbold");
+        document.getElementById("dependencies").append("Technology Dependencies: ");
         dependenciesSpan.innerText = dependencies;
+        el("dependencies").appendChild(dependenciesSpan);
       }
-      el("dependencies").appendChild(dependenciesSpan);
+      
 
-      let costSpan = document.createElement("span");
-      costSpan.setAttribute("class", "notbold");
-      if (cost === undefined) {
-        costSpan.innerText = "None";
-      } else {
+      
+      if (cost !== undefined) {
+        
+        let costSpan = document.createElement("span");
+        costSpan.setAttribute("class", "notbold");
+        document.getElementById("cost").append("Cost: ");
         costSpan.innerText = cost;
+        el("cost").appendChild(costSpan);
       }
-      el("cost").appendChild(costSpan);
+      
 
-      let discountSpan = document.createElement("span");
-      discountSpan.setAttribute("class", "notbold");
-      if (discount === undefined) {
-        discountSpan.innerText = "None";
-      } else {
+      
+      if (discount !== undefined) {
+        let discountSpan = document.createElement("span");
+        discountSpan.setAttribute("class", "notbold");
+        document.getElementById("discount").append("Discounts Offered for Non-Profits: ");
         discountSpan.innerText = discount;
+        el("discount").appendChild(discountSpan);
       }
-      el("discount").appendChild(discountSpan);
+      
 
-      let usageSpan = document.createElement("p");
-      usageSpan.setAttribute("class", "notbold");
-      if (usage === undefined) {
-        usageSpan.innerText = "None";
-      } else {
+      
+      if (usage !== undefined) {
+        
+        let usageSpan = document.createElement("p");
+        usageSpan.setAttribute("class", "notbold");
+        document.getElementById("usage").append("Step by Step Journey (Usage): ");
         usageSpan.innerText = usage;
+        el("usage").appendChild(usageSpan);
       }
-      el("usage").appendChild(usageSpan);
+      
 
-      let implementationSpan = document.createElement("p");
-      implementationSpan.setAttribute("class", "notbold");
-      if (implementation === undefined) {
-        implementationSpan.innerText = "None";
-      } else {
+      
+      if (implementation !== undefined) {
+        let implementationSpan = document.createElement("p");
+        implementationSpan.setAttribute("class", "notbold");
+        document.getElementById("implementation").append("Step by Step Journey (Implementation): ");
         implementationSpan.innerText = implementation;
+        el("implementation").appendChild(implementationSpan);
       }
-      el("implementation").appendChild(implementationSpan);
+      
 
-      let quickStartGuideA = document.createElement("a");
-      quickStartGuideA.setAttribute("class", "notbold");
-      if (quickStartGuide === undefined) {
-        quickStartGuideA.innerText = "None";
-      } else {
+      
+      if (quickStartGuide !== undefined) {
+        
+        let quickStartGuideA = document.createElement("a");
+        quickStartGuideA.setAttribute("class", "notbold");
+        document.getElementById("quickStartGuide").append("Quick Start Guide: ");
         console.log();
         quickStartGuideA.innerText = quickStartGuide;
         quickStartGuideA.href = quickStartGuide;
         quickStartGuideA.title = "Click Here";
         quickStartGuideA.target = "_blank";
+        el("quickStartGuide").appendChild(quickStartGuideA);
       }
-      el("quickStartGuide").appendChild(quickStartGuideA);
+      
 
-      let ratingOverallSpan = document.createElement("span");
-      ratingOverallSpan.setAttribute("class", "notbold");
-      if (ratingOverall === undefined) {
-        ratingOverallSpan.innerText = "None";
-      } else {
+      
+      if (ratingOverall !== undefined) {
+        
+        let ratingOverallSpan = document.createElement("span");
+        ratingOverallSpan.setAttribute("class", "notbold");
+        document.getElementById("ratingOverall").append("Rating (1-5) - Overall Satisfaction: ");
         ratingOverallSpan.innerText = ratingOverall;
+        el("ratingOverall").appendChild(ratingOverallSpan);
       }
-      el("ratingOverall").appendChild(ratingOverallSpan);
+      
 
-      let ratingEaseOfUseSpan = document.createElement("span");
-      ratingEaseOfUseSpan.setAttribute("class", "notbold");
-      if (ratingEaseOfUse === undefined) {
-        ratingEaseOfUseSpan.innerText = "None";
-      } else {
+      
+      if (ratingEaseOfUse !== undefined) {
+        
+        let ratingEaseOfUseSpan = document.createElement("span");
+        ratingEaseOfUseSpan.setAttribute("class", "notbold");
+        document.getElementById("ratingEaseOfUse").append("Rating (1-5) - Ease of Use: ");
         ratingEaseOfUseSpan.innerText = ratingEaseOfUse;
+        el("ratingEaseOfUse").appendChild(ratingEaseOfUseSpan);
       }
-      el("ratingEaseOfUse").appendChild(ratingEaseOfUseSpan);
+      
 
-      let ratingEaseOfDeploymentSpan = document.createElement("span");
-      ratingEaseOfDeploymentSpan.setAttribute("class", "notbold");
-      if (ratingEaseOfDeployment === undefined) {
-        ratingEaseOfDeploymentSpan.innerText = "None";
-      } else {
+      
+      if (ratingEaseOfDeployment !== undefined) {
+        let ratingEaseOfDeploymentSpan = document.createElement("span");
+        ratingEaseOfDeploymentSpan.setAttribute("class", "notbold");
+        document.getElementById("ratingEaseOfDeployment").append("Rating (1-5) - Ease of Deployment: ");
         ratingEaseOfDeploymentSpan.innerText = ratingEaseOfDeployment;
+        el("ratingEaseOfDeployment").appendChild(ratingEaseOfDeploymentSpan);
       }
-      el("ratingEaseOfDeployment").appendChild(ratingEaseOfDeploymentSpan);
+      
 
-      let ratingCostValueSpan = document.createElement("span");
-      ratingCostValueSpan.setAttribute("class", "notbold");
+      
       if (ratingCostValue === undefined) {
         ratingCostValueSpan.innerText = "None";
       } else {
+        let ratingCostValueSpan = document.createElement("span");
+        ratingCostValueSpan.setAttribute("class", "notbold");
+        document.getElementById("ratingCostValue").append("Rating (1-5) - Cost / Value: ");
         ratingCostValueSpan.innerText = ratingCostValue;
+        el("ratingCostValue").appendChild(ratingCostValueSpan);
       }
-      el("ratingCostValue").appendChild(ratingCostValueSpan);
+      
+      
     });
 }

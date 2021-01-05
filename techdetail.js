@@ -21,6 +21,7 @@ function renderTechDetail(tool) {
           let website = json["fields"]["Website"];
           let name = json['fields']['Name'];
           let tags = json["fields"]["Tags"];
+          let lastUpdated = json["fields"]["Last Updated Time"];
           let description = json["fields"]["Description"];
           let awio = json["fields"]["Animal Welfare Industry Only"];
           let contact = json["fields"]["Contact"];
@@ -33,6 +34,10 @@ function renderTechDetail(tool) {
           let toolLi = document.createElement("li");
           toolLi.innerText = name;
           el("tool").appendChild(toolLi);
+
+          let toolLi1 = document.createElement("li");
+          toolLi1.innerText = name;
+          el("toolPage").append(toolLi1);
 
           let websiteLi = document.createElement("a");
           websiteLi.setAttribute("class", "notbold");
@@ -47,10 +52,15 @@ function renderTechDetail(tool) {
             tagA.setAttribute("class", "notbold");
             tagA.innerText = `${tag}\u00A0\u00A0\u00A0`;
             tagA.title = "Click here";
-            tagA.href = `./techlist.html?${tag}`;
-            tagA.target = "_blank";
+            tagA.href = `./techlist2.html?${tag}`;
+            tagA.target = "_self";
             el("tags").appendChild(tagA);
           });
+
+          let updatedSpan = document.createElement("span");
+          updatedSpan.setAttribute("class", "notbold");
+          updatedSpan.innerText = lastUpdated;
+          el("updatedLast").appendChild(updatedSpan);
 
           let descriptionSpan = document.createElement("span");
           descriptionSpan.setAttribute("class", "notbold");
@@ -71,62 +81,75 @@ function renderTechDetail(tool) {
           contactSpan.innerText = contact;
           el("contact").appendChild(contactSpan);
 
-          let contactEmailA = document.createElement("a");
-          contactEmailA.setAttribute("class", "notbold");
-          if (contactEmail === undefined) {
-            contactEmailA.innerText = "None";
-          } else {
+          
+          if (contactEmail !== undefined) {
+            let contactEmailA = document.createElement("a");
+            contactEmailA.setAttribute("class", "notbold");
+            document.getElementById("email").append("Contact Email: ");
             contactEmailA.innerText = contactEmail;
             contactEmailA.title = "Click here";
             contactEmailA.href = `mailto:${contactEmail}`;
+            el("email").appendChild(contactEmailA);
           }
-          el("email").appendChild(contactEmailA);
+          
 
           'look here to change the no one to invisible section'
           'change made, moved el("model") line to else stmt'
-          let pricingModelSpan = document.createElement("span");
-          pricingModelSpan.setAttribute("class", "notbold");
-          if (pricingModel === undefined) {
-            pricingModelSpan.innerText = "None";
-          } else {
-            pricingModelSpan.innerText = pricingModel;
-            
+          
+          if((pricingModel!==undefined) || (pricingDetails!==undefined )) {
+            document.getElementById("pricingHeader").append("Pricing");
           }
-          el("model").appendChild(pricingModelSpan);
+
+
+          if (pricingModel !== undefined) {
+            let pricingModelSpan = document.createElement("span");
+            pricingModelSpan.setAttribute("class", "notbold");
+            document.getElementById("model").append("Pricing Model: ");
+            pricingModelSpan.innerText = pricingModel;
+            el("model").appendChild(pricingModelSpan);
+          }
+          
 
           
-          let pricingDetailsSpan = document.createElement("span");
-          pricingDetailsSpan.setAttribute("class", "notbold");
-          if (pricingDetails === undefined) {
-            pricingDetailsSpan.innerText = "None";
-          } else {
+          
+          if (pricingDetails !== undefined) {
+            let pricingDetailsSpan = document.createElement("span");
+            pricingDetailsSpan.setAttribute("class", "notbold");
+            document.getElementById("details").append("Pricing Details: ");
             pricingDetailsSpan.innerText = pricingDetails;
-            
+            el("details").appendChild(pricingDetailsSpan);
           }
-          el("details").appendChild(pricingDetailsSpan);
+          
 
-          let attachmentsA = document.createElement("a");
-          attachmentsA.setAttribute("class", "notbold");
-          if (attachments === undefined) {
-            attachmentsA.innerText = "None";
-          } else {
+          
+          if (attachments !== undefined) {
+            
+            let attachmentsA = document.createElement("a");
+            attachmentsA.setAttribute("class", "notbold");
+            document.getElementById("attachmentsHeader").append("Attachments");
             for (let i of attachments) {
               attachmentsA.innerText = i.url;
               attachmentsA.title = "Click here";
               attachmentsA.href = i.url;
-              attachmentsA.target = "_blank";
+              attachmentsA.target = "_self";
             }
+            el("attachments").appendChild(attachmentsA);
+            document.getElementById("attachments").append("")
           }
-          el("attachments").appendChild(attachmentsA);
+          
 
-          let caseStudiesA = document.createElement("a");
+          
           if (caseStudies === undefined) {
-            caseStudiesA.innerText = "None";
-            el("caseStudies").appendChild(caseStudiesA);
+            //caseStudiesA.innerText = "None";
+            //el("caseStudies").appendChild(caseStudiesA);
           } else {
+            let caseStudiesA = document.createElement("a");
+            
             for (let i of caseStudies) {
               renderCaseStudies(i);
             }
+            document.getElementById("caseStudyHeader").append("Case Studies");
+            document.getElementById("caseStudyExamples").append("Examples:  ");
           }
         }
       
@@ -153,7 +176,7 @@ function renderCaseStudies(study) {
       caseStudiesA.innerText = studyTitle;
       caseStudiesA.title = "Click here";
       caseStudiesA.href = `./techcasestudy.html?${study}`;
-      caseStudiesA.target = "_blank";
+      caseStudiesA.target = "_self";
       el(studyTitle).appendChild(caseStudiesA);
     });
 }
