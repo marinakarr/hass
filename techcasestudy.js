@@ -23,6 +23,7 @@ function renderTechnology(tech) {
     .then((res) => res.json())
     .then((json) => {
       let caseStudyTech = json["fields"]["Name"];
+      let caseStudyId = json["id"];
       let studyTech = history.back
       console.log(studyTech);
       let technologyA = document.createElement("a");
@@ -30,11 +31,12 @@ function renderTechnology(tech) {
       technologyA.setAttribute("class", "notbold");
       technologyA.innerText = caseStudyTech;
       technologyA.title = "Click here";
-      technologyA.href = `./techdetail.html?${caseStudyTech}`;
-      technologyA.target = "_blank";
+      technologyA.href = `./techdetail.html?${caseStudyId}`;
+      technologyA.target = "_self";
       el("technology").appendChild(technologyA);
       el("toolName").append(caseStudyTech);
-      //el("toolName").setAttribute("href", document.referrer)
+      el("toolName").setAttribute("href", technologyA.href);
+      
 
     });
 }
@@ -46,7 +48,7 @@ function renderTags(taglist) {
     tagsA.innerText = `${i}\u00A0\u00A0\u00A0`;
     tagsA.title = "Click here";
     tagsA.href = `./techlist2.html`;
-    tagsA.target = "_blank";
+    tagsA.target = "_self";
     el("tags").appendChild(tagsA);
   }
 }
@@ -82,6 +84,7 @@ function renderCaseStudyPage(study) {
       let ratingEaseOfUse = json["fields"]["Rating (1-5) - Ease of Use"];
       let ratingEaseOfDeployment = json["fields"]["Rating (1-5) - Ease of Deployment"];
       let ratingCostValue = json["fields"]["Rating (1-5) - Cost / Value"];
+      
 
       let titleSpan = document.createElement("span");
       titleSpan.setAttribute("class", "notbold");
@@ -279,6 +282,7 @@ function renderCaseStudyPage(study) {
         ratingCostValueSpan.innerText = ratingCostValue;
         el("ratingCostValue").appendChild(ratingCostValueSpan);
       }
+      
       
     });
 }

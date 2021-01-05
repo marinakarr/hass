@@ -21,6 +21,7 @@ function renderTechDetail(tool) {
           let website = json["fields"]["Website"];
           let name = json['fields']['Name'];
           let tags = json["fields"]["Tags"];
+          let lastUpdated = json["fields"]["Last Updated Time"];
           let description = json["fields"]["Description"];
           let awio = json["fields"]["Animal Welfare Industry Only"];
           let contact = json["fields"]["Contact"];
@@ -55,6 +56,11 @@ function renderTechDetail(tool) {
             tagA.target = "_self";
             el("tags").appendChild(tagA);
           });
+
+          let updatedSpan = document.createElement("span");
+          updatedSpan.setAttribute("class", "notbold");
+          updatedSpan.innerText = lastUpdated;
+          el("updatedLast").appendChild(updatedSpan);
 
           let descriptionSpan = document.createElement("span");
           descriptionSpan.setAttribute("class", "notbold");
@@ -170,7 +176,7 @@ function renderCaseStudies(study) {
       caseStudiesA.innerText = studyTitle;
       caseStudiesA.title = "Click here";
       caseStudiesA.href = `./techcasestudy.html?${study}`;
-      caseStudiesA.target = "_blank";
+      caseStudiesA.target = "_self";
       el(studyTitle).appendChild(caseStudiesA);
     });
 }
