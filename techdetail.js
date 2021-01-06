@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let params = location.search;
   let newParams = params.toString().replace("?", "")
   renderTechDetail(newParams);
+  var url = window.location.href
+  var refresh= url.split("?")[0];
 });
 
 function el(id) {
@@ -30,6 +32,7 @@ function renderTechDetail(tool) {
           let pricingDetails = json["fields"]["Pricing Details"];
           let attachments = json["fields"]["Attachments"];
           let caseStudies = json["fields"]["Case Studies"];
+          console.log(caseStudies)
 
           let toolLi = document.createElement("li");
           toolLi.innerText = name;
@@ -52,7 +55,7 @@ function renderTechDetail(tool) {
             tagA.setAttribute("class", "notbold");
             tagA.innerText = `${tag}\u00A0\u00A0\u00A0`;
             tagA.title = "Click here";
-            tagA.href = `./techlist2.html?${tag}`;
+            tagA.href = `./techlist.html?${tag}`;
             tagA.target = "_self";
             el("tags").appendChild(tagA);
           });
@@ -139,10 +142,8 @@ function renderTechDetail(tool) {
           
 
           
-          if (caseStudies === undefined) {
-            //caseStudiesA.innerText = "None";
-            //el("caseStudies").appendChild(caseStudiesA);
-          } else {
+          if (caseStudies){
+            console.log(5)
             let caseStudiesA = document.createElement("a");
             
             for (let i of caseStudies) {
