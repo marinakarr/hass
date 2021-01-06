@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let params = location.search;
   let newParams = params.toString().replace("?", "")
   renderTechDetail(newParams);
+  var url = window.location.href
+  var refresh= url.split("?")[0];
 });
 
 function el(id) {
@@ -52,7 +54,7 @@ function renderTechDetail(tool) {
             tagA.setAttribute("class", "notbold");
             tagA.innerText = `${tag}\u00A0\u00A0\u00A0`;
             tagA.title = "Click here";
-            tagA.href = `./techlist2.html?${tag}`;
+            tagA.href = `./techlist.html?${tag}`;
             tagA.target = "_self";
             el("tags").appendChild(tagA);
           });
@@ -78,10 +80,11 @@ function renderTechDetail(tool) {
 
           let contactSpan = document.createElement("span");
           contactSpan.setAttribute("class", "notbold");
-          contactSpan.innerText = contact;
+          if (contact !== 'NA'){
+            contactSpan.innerText = contact;
+          }
           el("contact").appendChild(contactSpan);
 
-          
           if (contactEmail !== undefined) {
             let contactEmailA = document.createElement("a");
             contactEmailA.setAttribute("class", "notbold");
@@ -140,8 +143,7 @@ function renderTechDetail(tool) {
 
           
           if (caseStudies === undefined) {
-            //caseStudiesA.innerText = "None";
-            //el("caseStudies").appendChild(caseStudiesA);
+         
           } else {
             let caseStudiesA = document.createElement("a");
             

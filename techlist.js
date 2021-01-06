@@ -180,7 +180,7 @@ function addTechNamesToTags(tag, list) {
       toolNameLi.setAttribute("id", i.id);
       toolNameLi.innerText = i.name;
       toolNameLi.href = `./techdetail.html?${i.id}`;
-      toolNameLi.target = "_blank";
+      toolNameLi.target = "_self";
       document.getElementById(tagId+'Child').append(toolNameLi);
     }
   })

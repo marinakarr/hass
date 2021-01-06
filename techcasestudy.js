@@ -47,7 +47,7 @@ function renderTags(taglist) {
     tagsA.setAttribute("class", "notbold");
     tagsA.innerText = `${i}\u00A0\u00A0\u00A0`;
     tagsA.title = "Click here";
-    tagsA.href = `./techlist2.html`;
+    tagsA.href = `./techlist.html`;
     tagsA.target = "_self";
     el("tags").appendChild(tagsA);
   }
@@ -273,9 +273,9 @@ function renderCaseStudyPage(study) {
       
 
       
-      if (ratingCostValue === undefined) {
-        ratingCostValueSpan.innerText = "None";
-      } else {
+      if (ratingCostValue !== undefined) {
+        //ratingCostValueSpan.innerText = "None";
+      //} else {
         let ratingCostValueSpan = document.createElement("span");
         ratingCostValueSpan.setAttribute("class", "notbold");
         document.getElementById("ratingCostValue").append("Rating (1-5) - Cost / Value: ");
