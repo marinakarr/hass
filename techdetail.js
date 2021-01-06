@@ -32,7 +32,6 @@ function renderTechDetail(tool) {
           let pricingDetails = json["fields"]["Pricing Details"];
           let attachments = json["fields"]["Attachments"];
           let caseStudies = json["fields"]["Case Studies"];
-          console.log(caseStudies)
 
           let toolLi = document.createElement("li");
           toolLi.innerText = name;
@@ -81,10 +80,11 @@ function renderTechDetail(tool) {
 
           let contactSpan = document.createElement("span");
           contactSpan.setAttribute("class", "notbold");
-          contactSpan.innerText = contact;
+          if (contact !== 'NA'){
+            contactSpan.innerText = contact;
+          }
           el("contact").appendChild(contactSpan);
 
-          
           if (contactEmail !== undefined) {
             let contactEmailA = document.createElement("a");
             contactEmailA.setAttribute("class", "notbold");
@@ -142,8 +142,9 @@ function renderTechDetail(tool) {
           
 
           
-          if (caseStudies){
-            console.log(5)
+          if (caseStudies === undefined) {
+         
+          } else {
             let caseStudiesA = document.createElement("a");
             
             for (let i of caseStudies) {
