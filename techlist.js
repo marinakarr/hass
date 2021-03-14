@@ -1,11 +1,12 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('loaded')
-  fetchTechList();
 
   var url = window.location.href
-  var refresh= url.split("?")[0];
+  var refresh= url.split("#")[0];
+  var loc = url.split('#')[1];
   window.history.pushState("object or string", "Title", refresh );
+
+  fetchTechList(loc);
   
 });
 
@@ -51,7 +52,9 @@ function renderEachTag(tag) {
   const tagLink = document.createElement("a");
   tagLink.setAttribute("class", "nav-item p-3");
   tagLink.innerText = tag.tagName;
-  tagLink.href = '#'+tagId;
+
+  tagLink.href = window.location.href +'#'+tagId;
+
   $('#tagNav').append(tagLink);
 }
 
@@ -102,13 +105,12 @@ class tag {
 
 }
 //retrieves the list of technologies and stores into class objects
-function fetchTechList() {
-  console.log('hello')
+function fetchTechList(pageLocation) {
   let tagsArray = [];
   
   fetch("https://api.airtable.com/v0/appT5nNiLF8Dr1wwj/Technology%20List/", {
     headers: {
-      Authorization: "Bearer keyemv7utChwq4g5e",
+      Authorization: "Bearer key7zU3LJQO0JQP2R",
     },
   })
   .then((res) => res.json())
@@ -138,9 +140,11 @@ function fetchTechList() {
     tagList[tagName] = t
 
   })
+  //copying the list without reference
   let currFilter=[]
-  for (i = 0; i < allTechList.length; i++) {
-    currFilter[i] = allTechList[i];
+  sortedList = allTechList.sort((a, b) => (a.name > b.name) ? 1 : -1)
+  for (i = 0; i < sortedList.length; i++) {
+    currFilter[i] = sortedList[i];
   }
 
   //sort tools into tag lists
@@ -151,19 +155,25 @@ function fetchTechList() {
     })
   })
   renderFilters();
-  renderItems(currFilter);
+  renderItems(currFilter, pageLocation);
+
   })
 
 };
   
 //render each tag and get tech sites that match the filter
 //uses the overall tagslist and either techList or filtered version
-function renderItems(tools){
+function renderItems(tools, pageLocation){
   for (const obj in tagList){
     j = tagList[obj];
     renderEachTag(j);
     addTechNamesToTags(j, tools);
-    
+  }
+
+  if (pageLocation) { 
+    var url = window.location.href + '#' + pageLocation
+    console.log(url)
+    window.location = url
   }
 };
 
@@ -246,6 +256,16 @@ function renderFilters(){
   });
 }
  
+function translatePage(){
+  console.log('translating');
+  var translateButton = document.getElementById('translate');
+  translateButton.innerText='For English, click here';
+
+  var url = window.location.href
+  var newurl = 'http://translate.google.com/translate?js=n&sl=auto&tl=es&u='+url;
+  window.history.pushState('object or string', 'Title', newurl);
+
+}
 
 function filtering(){
   let price = document.getElementById("priceList");
@@ -266,6 +286,7 @@ function filtering(){
       currFilter.push(tool)
     }
   })
+
   refreshLists()
   renderItems(currFilter)
   return;
@@ -277,6 +298,9 @@ function refreshLists(){
   toolLists.innerHTML=''
   var nav = document.getElementById('tagNav')
   nav.innerHTML=''
+  var url = window.location.href
+  var refresh= url.split("#")[0];
+  window.history.pushState("object or string", "Title", refresh );
   // var pm = document.getElementById('priceList')
   // pm.innerHTML=''
   // var maint = document.getElementById('maintain')
@@ -284,5 +308,7 @@ function refreshLists(){
   // var imp = document.getElementById('implement')
   // imp.innerHTML=''
 }
+
+
 
 
