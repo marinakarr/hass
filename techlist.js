@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   var refresh= url.split("#")[0];
   var loc = url.split('#')[1];
   window.history.pushState("object or string", "Title", refresh );
+  
+  var translateButton = document.getElementById('translate');
+  var newurl = 'http://translate.google.com/translate?js=n&sl=auto&tl=es&u='+url;
+  translateButton.href = newurl;
 
   fetchTechList(loc);
   
